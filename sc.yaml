@@ -1,0 +1,15 @@
+# Source: nfs-client-provisioner/templates/storageclass.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  labels:
+    app: nfs-client-provisioner
+    chart: nfs-client-provisioner-1.2.11
+    heritage: Helm
+    release: v3.1.0-k8s1.11
+  name: nfs-client
+provisioner: cluster.local/v3.1.0-k8s1.11-nfs-client-provisioner
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+parameters:
+  archiveOnDelete: "true"
