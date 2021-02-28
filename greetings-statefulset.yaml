@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: greetings-statefulset
+  labels:
+    app: greetings-statefulset
+spec:
+  serviceName: "greetings-statefulset"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greetings-statefulset
+  template:
+    metadata:
+      labels:
+        app: greetings-statefulset
+    spec:
+      containers:
+      - name: greetings-statefulset
+        image: vikrantsnirban/greetings
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: nfs-dyamic-storage
+          mountPath: /var/nfs_shared
+  volumeClaimTemplates:
+  - metadata:
+      name: nfs-dyamic-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "nfs-client"
+      resources:
+        requests:
+          storage: 1Gi
